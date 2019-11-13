@@ -23,7 +23,7 @@ public class AdministratorService {
 	/**
 	 * 管理者情報を登録します.
 	 * 
-	 * @param administrator　管理者情報
+	 * @param administrator 管理者情報
 	 */
 	public void insert(Administrator administrator) {
 		administratorRepository.insert(administrator);
@@ -33,16 +33,33 @@ public class AdministratorService {
 	 * ログインをします.
 	 * @param mailAddress メールアドレス
 	 * @param password パスワード
-	 * @return 管理者情報　存在しない場合はnullが返ります
+	 * @return 管理者情報 存在しない場合はnullが返ります
 	 */
 	public Administrator login(String mailAddress, String passward) {
 		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, passward);
 		return administrator;
 	}
 	
+	/**
+	 * メールアドレスの一致する管理者情報を取得します.
+	 * 
+	 * @param mailAddress 検索したいメールアドレス
+	 * @return 検索された管理者
+	 */
 	public Administrator findByMailAddress(String mailAddress) {
 		Administrator administrator = administratorRepository.findByMailAddress(mailAddress);
 		return administrator;
 		
+	}
+	
+	/**
+	 * パスワードが入力された内容と等しいかチェックします.
+	 * 
+	 * @param password パスワード
+	 * @param passwordConfirm 確認用パスワード
+	 * @return 比較結果を返します。比較が正しければ、true、違っていればfalseを返す。
+	 */
+	public boolean isCheckPassword(String password, String passwordConfirm) {
+		return passwordConfirm.equals(password);
 	}
 }
