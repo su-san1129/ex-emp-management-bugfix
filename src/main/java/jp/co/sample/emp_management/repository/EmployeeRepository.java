@@ -58,7 +58,7 @@ public class EmployeeRepository {
 	}
 
 	/**
-	 * 主キーから従業員情報を入社日順で取得します.
+	 * 主キーから従業員情報を取得します.
 	 * 
 	 * @param id 検索したい従業員ID
 	 * @return 検索された従業員情報

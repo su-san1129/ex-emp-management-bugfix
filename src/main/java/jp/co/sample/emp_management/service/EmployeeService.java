@@ -54,7 +54,7 @@ public class EmployeeService {
 	}
 	
 	public List<Employee> findByNameFizzySerch(String name){
-		if( name == null) {
+		if( "".equals(name)) {
 			return employeeRepository.findAll();
 		}
 		return employeeRepository.findByName(name);
