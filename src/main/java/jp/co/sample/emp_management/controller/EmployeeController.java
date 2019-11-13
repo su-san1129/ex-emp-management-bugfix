@@ -92,4 +92,14 @@ public class EmployeeController {
 		employeeService.update(employee);
 		return "redirect:/employee/showList";
 	}
+	
+	@RequestMapping("/fuzzy-search")
+	public String findByNameFuzzySerch(String name, Model model) {
+		List<Employee> employeeList = employeeService.findByNameFizzySerch(name);
+		if(employeeList.size() == 0) {
+			model.addAttribute("errorMessage", "該当するデータがありませんでした。");
+		}
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
+	}
 }
