@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 import jp.co.sample.emp_management.domain.Employee;
 import jp.co.sample.emp_management.form.UpdateEmployeeForm;
 import jp.co.sample.emp_management.service.EmployeeService;
@@ -49,7 +50,10 @@ public class EmployeeController {
 	@RequestMapping("/showList")
 	public String showList(Model model) {
 		List<Employee> employeeList = employeeService.showList();
+		// 全従業員の名前だけをリストで出力
+		List<String> nameList = employeeService.employeeNameList();
 		model.addAttribute("employeeList", employeeList);
+		model.addAttribute("nameList", nameList);
 		return "employee/list";
 	}
 
@@ -102,4 +106,6 @@ public class EmployeeController {
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
 	}
+
+	
 }
