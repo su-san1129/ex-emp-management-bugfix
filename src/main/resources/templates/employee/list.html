@@ -63,21 +63,21 @@
 			<li class="active"><a href="list.html"
 				th:href="@{/employee/showList}">従業員リスト</a></li>
 		</ol>
-		<form th:action="@{/employee/fuzzy-search}" method="post">
-			<div class="form-group">
-				<div class="row">
-					<div class="col-sm-6">
-						<input type="text" id="txtKeywd" name="name"
-							placeholder="従業員の名前を入力" class="form-control">
-						<button>検索</button>
-					</div>
-				</div>
-			</div>
-		</form>
+
 
 		<!-- table -->
 		<div th:text="${errorMessage}"></div>
 		<div class="row">
+			<form th:action="@{/employee/fuzzy-search}" method="post">
+				<div class="form-group">
+
+						<div class="col-lg-offset-2 col-lg-8 form-inline">
+							<input type="text" id="fuzzy-search" name="name"
+								placeholder="従業員の名前を入力" class="form-control inline-form" style="width: 600px">
+							<button class="btn btn-success">検索</button>
+						</div>
+				</div>
+			</form>
 			<div
 				class="table-responsive col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
 
@@ -117,7 +117,7 @@
 	</div>
 	<script th:inline="javascript">
 	/*<![CDATA[>*/
-		$("#txtKeywd").autocomplete({
+		$("#fuzzy-search").autocomplete({
 			source: /*[[ ${nameList} ]]*/
 		});
 	/*]]>*/

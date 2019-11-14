@@ -69,16 +69,20 @@ public class AdministratorService {
 	}
 	
 	/**
-	 * @param mailAddress
-	 * @param password
-	 * @return
+	 * メールアドレスの一致するユーザを取得し、パスワードが正しいかどうか比較する.
+	 * 
+	 * @param mailAddress 検索するメールアドレス
+	 * @param password フォームから送られたパスワード
+	 * @return パスワードチェックが通った管理者。通らないときはnullを返却。
 	 */
 	public Administrator loginByCheckAdministrator(String mailAddress, String password) {
 		Administrator checkAdministrator = administratorRepository.findByMailAddress(mailAddress);
-		if( passwordEncoder.matches( password, checkAdministrator.getPassword()) ) {
-			return checkAdministrator;
-		} else {
+		if( checkAdministrator == null ) {
 			return null;
 		}
+		if( passwordEncoder.matches( password, checkAdministrator.getPassword()) ) {
+			return checkAdministrator;
+		}
+		return null;
 	}
 }
