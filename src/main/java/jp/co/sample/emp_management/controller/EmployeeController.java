@@ -49,11 +49,14 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/showList")
 	public String showList(Model model) {
-		List<Employee> employeeList = employeeService.showList();
+		List<Employee> employeeList = employeeService.findAllEmployeeFromPageNumber(1);
 		// 全従業員の名前だけをリストで出力
 		List<String> nameList = employeeService.employeeNameList();
 		model.addAttribute("employeeList", employeeList);
 		model.addAttribute("nameList", nameList);
+		model.addAttribute("index", 1);
+		model.addAttribute("nextIndex", 2);
+		model.addAttribute("pageList", employeeService.pageList());
 		return "employee/list";
 	}
 
@@ -97,6 +100,13 @@ public class EmployeeController {
 		return "redirect:/employee/showList";
 	}
 	
+	/**
+	 * リクエストパラメーターで検索された名前から従業員を検索します.
+	 * 
+	 * @param name 検索したい名前
+	 * @param model モデル
+	 * @return 検索された従業員情報
+	 */
 	@RequestMapping("/fuzzy-search")
 	public String findByNameFuzzySerch(String name, Model model) {
 		List<Employee> employeeList = employeeService.findByNameFizzySerch(name);
@@ -104,6 +114,25 @@ public class EmployeeController {
 			model.addAttribute("errorMessage", "該当するデータがありませんでした。");
 		}
 		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
+	}
+	
+	/**
+	 * 全従業員情報を10件刻み
+	 * 
+	 * @param index
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/page")
+	public String findAllPageNumber(Integer index, Model model) {
+		List<Employee> employeeList = employeeService.findAllEmployeeFromPageNumber(index);
+		model.addAttribute("employeeList", employeeList);
+		model.addAttribute("pageList", employeeService.pageList());
+		model.addAttribute("index", index);
+		model.addAttribute("preIndex", (index-1));
+		model.addAttribute("nextIndex", (index+1));
+		
 		return "employee/list";
 	}
 

@@ -69,6 +69,10 @@ public class EmployeeService {
 		return employeeRepository.findByName(name);
 	}
 	
+	/**
+	 * 全従業員情報から名前を取得して
+	 * @return
+	 */
 	public List<String> employeeNameList(){
 		List<String> nameList = new ArrayList<>();
 		List<Employee> employeeList = employeeRepository.findAll();
@@ -76,5 +80,46 @@ public class EmployeeService {
 			nameList.add(employee.getName());
 		}
 		return nameList;
+	}
+	
+	/**
+	 * 全従業員数を取得.
+	 * 
+	 * @return 全従業員数
+	 */
+	public Integer countData() {
+		return employeeRepository.findAllCount();
+	}
+	
+	/**
+	 * 必要なページ数.
+	 * 
+	 * 全従業員数 / 10 をリストで返す。従業員が割り切れる場合は、1件多く取得。
+	 * @return ページネーションに必要なページ数。
+	 */
+	public List<Integer> pageList(){
+		// 全従業員数
+		Integer count = countData();
+		List<Integer> pageList = new ArrayList<>();
+		if( count % 10 == 0) {
+			for (int i = 1; i <= count/10; i++) {
+				pageList.add(i);
+			} 
+		} else {
+			for (int i = 1; i <= count/10 + 1; i++) {
+				pageList.add(i);
+			}
+		}
+		return pageList;
+	}
+	
+	/**
+	 * 従業員を10件刻みで取得する.
+	 * 
+	 * @param index 指定したインデックス
+	 * @return インデックスから検索される従業員10件
+	 */
+	public List<Employee> findAllEmployeeFromPageNumber(Integer index){
+		return employeeRepository.findeAllpageNumberEmployee(index);
 	}
 }

@@ -98,4 +98,40 @@ public class EmployeeRepository {
 		return employeeList;
 	}
 	
+	/**
+	 * 全従業員数を取得.
+	 * 
+	 * @return 全従業員数
+	 */
+	public Integer findAllCount() {
+		SqlParameterSource param = new MapSqlParameterSource();
+		String countSql = "SELECT COUNT(*) FROM employees";
+		Integer count = template.queryForObject(countSql,param ,Integer.class);
+		return count;
+	}
+	
+	/**
+	 * 引数で取得したインデックスから10件刻みで情報を取得する.
+	 * 
+	 * @param pageIndex 取得したい10件
+	 * @return 引数で指定したインデックス*10の10件を返す。
+	 */
+	public List<Employee> findeAllpageNumberEmployee(Integer pageIndex){
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT id, name, image, gender, hire_date, mail_address, zip_code, address, telephone, salary, characteristics, dependents_count ");
+		sql.append("FROM employees ");
+		sql.append("ORDER BY hire_date ");
+		sql.append("LIMIT 10 OFFSET :pageIndex");
+		String paramSql = sql.toString();
+		
+		if( pageIndex*10 - 11 < 0 ) {
+			pageIndex = 0;
+		}else {
+			pageIndex = pageIndex*10 -11;
+		}
+		SqlParameterSource param = new MapSqlParameterSource().addValue( "pageIndex", pageIndex);
+		List<Employee> employeeList = template.query(paramSql, param, EMPLOYEE_ROW_MAPPER);
+		return employeeList;
+	}
+	
 }

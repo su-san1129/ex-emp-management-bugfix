@@ -108,6 +108,26 @@
 						</tr>
 					</tbody>
 				</table>
+				
+				<nav>
+					<ul class="pagination">
+						<li th:unless="${index == pageList.get(0)}"><a
+							th:href="@{'/employee/page?index='+ ${preIndex}}"
+							aria-label="次のページ!!"> <span aria-hidden="true">«</span>
+						</a></li>
+
+						<li th:each="page,status:${pageList}" th:classappend="${status.count == index} ? active">
+							<a th:href="@{'/employee/page?index=' + ${page}}">
+								<span th:text="${page}">1</span>
+							</a>
+						</li>
+						
+						<li th:if="${ index < pageList.size() }"><a
+							th:href="@{'/employee/page?index='+ ${nextIndex}}"
+							aria-label="次のページ!!"> <span aria-hidden="true">»</span>
+						</a></li>
+					</ul>
+				</nav>
 
 
 				<!-- ここから下を編集する必要はありません -->
